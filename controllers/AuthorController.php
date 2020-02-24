@@ -3,17 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Authors;
-use app\models\AuthorsSearch;
+use app\models\Author;
+use app\models\AuthorSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AuthorsController implements the CRUD actions for Authors model.
+ * AuthorController implements the CRUD actions for Author model.
  */
-class AuthorsController extends Controller
+class AuthorController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,12 +31,12 @@ class AuthorsController extends Controller
     }
 
     /**
-     * Lists all Authors models.
+     * Lists all Author models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AuthorsSearch();
+        $searchModel = new AuthorSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +46,7 @@ class AuthorsController extends Controller
     }
 
     /**
-     * Displays a single Authors model.
+     * Displays a single Author model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,16 +59,16 @@ class AuthorsController extends Controller
     }
 
     /**
-     * Creates a new Authors model.
+     * Creates a new Author model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Authors();
+        $model = new Author();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->author_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -77,7 +77,7 @@ class AuthorsController extends Controller
     }
 
     /**
-     * Updates an existing Authors model.
+     * Updates an existing Author model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -88,7 +88,7 @@ class AuthorsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->author_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -97,9 +97,10 @@ class AuthorsController extends Controller
     }
 
     /**
-     * Deletes an existing Authors model.
+     * Deletes an existing Author model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
+     * @param string $name
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -115,31 +116,50 @@ class AuthorsController extends Controller
         return $this->render('list',compact('id'));
     }
 
-    public function actionAuthors()
+    public function actionLists($id)
     {
-        $model = Authors::find();
+        $model = Author::find()->where(['id' => $id])->one();
+        return $this->render('lists',compact('model'));
+    }
+
+    public function actionAuthor()
+    {
+
+        $model = Author::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $model,
             'pagination' => [
-                'pageSize' => 5,
+                'pageSize' => 10,
             ],
         ]);
 
+        return $this->render('author',compact('dataProvider'));
+    }
+
+    public function actionAuthors()
+    {
+        $model = Author::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
         return $this->render('authors',compact('dataProvider'));
     }
 
-
     /**
-     * Finds the Authors model based on its primary key value.
+     * Finds the Author model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Authors the loaded model
+     * @return Author the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Authors::findOne($id)) !== null) {
+        if (($model = Author::findOne($id)) !== null) {
             return $model;
         }
 

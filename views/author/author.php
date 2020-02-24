@@ -8,15 +8,14 @@ echo GridView::widget([
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
         [
-            'attribute' => 'author_id',
+            'attribute' => 'id',
             'format' => 'raw',
             'value' => function ($model) {
-                if ($model->author_id) {
-                    return "<a href='/authors/list/$model->author_id' >$model->name  $model->surname</a>";
+                if ($model->id) {
+                    return "<a href='/author/list/$model->id' >$model->name  $model->surname</a>";
                 }
             }
-
         ]
     ],
 ]);
-?>
+

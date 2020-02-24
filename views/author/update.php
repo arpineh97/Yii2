@@ -3,13 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Authors */
+/* @var $model app\models\Author */
 
-$this->title = 'Create Authors';
+$this->title = 'Update Author: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Authors', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="authors-create">
+<div class="author-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

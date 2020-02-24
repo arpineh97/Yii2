@@ -3,18 +3,22 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "authors".
  *
- * @property int $author_id
+ * @property int $id
  * @property string|null $name
  * @property string|null $surname
  *
- * @property AuthorsBooks[] $authorsBooks
+ * @property AuthorBook[] $authorBook
  */
-class Authors extends \yii\db\ActiveRecord
+class Author extends \yii\db\ActiveRecord
 {
+
+    public $bookIds;
+    public $bookNames;
     /**
      * {@inheritdoc}
      */
@@ -29,6 +33,7 @@ class Authors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['bookIds','safe'],
             [['name', 'surname'], 'required'],
             [['name', 'surname'], 'safe'],
             [['name', 'surname'], 'string', 'max' => 255]
@@ -41,20 +46,26 @@ class Authors extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'author_id' => 'Authors',
+            'id' => 'Authors',
             'name' => 'Name',
             'surname' => 'Surname',
+            'bookIds' => 'Books Ids',
+            'bookNames' => 'Book Names'
         ];
     }
 
     /**
      * Gets query for [[AuthorsBooks]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAuthorsBooks()
+    public function getAuthorBook()
     {
-        return $this->hasMany(AuthorsBooks::class, ['author_id' => 'author_id']);
+        return $this->hasMany(AuthorBook::class, ['author_id' => 'id']);
     }
 
+    public function getBooks()
+    {
+        return $this->hasMany(Book::class, ['id' => 'book_id'])->via('authorBook');
+    }
 }

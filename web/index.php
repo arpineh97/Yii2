@@ -14,7 +14,7 @@ $config = require __DIR__ . '/../config/web.php';
 
 function debug($array){
     echo "<pre>";
-    var_dump($array);
+    print_r($array);
     echo "</pre>";
     die;
 }

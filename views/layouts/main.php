@@ -38,9 +38,10 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Authors List', 'url' => ['/authors/authors']],
-            ['label' => 'Authors', 'url' => ['/authors/index']],
-            ['label' => 'Books', 'url' => ['/books/index']],
+            ['label' => 'Authors List', 'url' => ['/author/author']],
+            ['label' => 'Authors Object List', 'url' => ['/author/authors']],
+            ['label' => 'Authors', 'url' => ['/author/index']],
+            ['label' => 'Books', 'url' => ['/book/index']],
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],

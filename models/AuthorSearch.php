@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Authors;
+use app\models\Author;
 
 /**
- * AuthorsSearch represents the model behind the search form of `app\models\Authors`.
+ * AuthorSearch represents the model behind the search form of `app\models\Author`.
  */
-class AuthorsSearch extends Authors
+class AuthorSearch extends Author
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,7 @@ class AuthorsSearch extends Authors
     public function rules()
     {
         return [
-            [['author_id'], 'integer'],
+            [['id'], 'integer'],
             [['name', 'surname'], 'safe'],
         ];
     }
@@ -40,7 +40,7 @@ class AuthorsSearch extends Authors
      */
     public function search($params)
     {
-        $query = Authors::find();
+        $query = Author::find();
 
         // add conditions that should always apply here
 
@@ -58,7 +58,7 @@ class AuthorsSearch extends Authors
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'author_id' => $this->author_id,
+            'id' => $this->id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

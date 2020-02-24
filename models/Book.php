@@ -3,19 +3,21 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "books".
  *
- * @property int $book_id
+ * @property int $id
  * @property string|null $title
  * @property string|null $description
  *
- * @property AuthorsBooks[] $authorsBooks
+ * @property AuthorBook[] $authorBook
  */
-class Books extends \yii\db\ActiveRecord
+class Book extends \yii\db\ActiveRecord
 {
     public $authors;
+
     /**
      * {@inheritdoc}
      */
@@ -30,7 +32,6 @@ class Books extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-
             [['title', 'description'], 'required'],
             [['title', 'description'], 'safe'],
             [['title', 'description'], 'string', 'max' => 255],
@@ -44,7 +45,7 @@ class Books extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'book_id' => 'Book ID',
+            'id' => 'ID',
             'title' => 'Title',
             'description' => 'Description',
             'authors' => 'Authors'
@@ -54,24 +55,28 @@ class Books extends \yii\db\ActiveRecord
     /**
      * Gets query for [[AuthorsBooks]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAuthorsBooks()
+    public function getAuthorBook()
     {
-        return $this->hasMany(AuthorsBooks::class, ['book_id' => 'book_id']);
+        return $this->hasMany(AuthorBook::class, ['book_id' => 'id']);
     }
 
     public function insertData($authorId)
     {
-        $model = new AuthorsBooks();
+        $model = new AuthorBook();
         $model->author_id = $authorId;
-        $model->book_id = $this->book_id;
+        $model->book_id = $this->id;
         $model->save();
     }
 
     public function deleteData(){
-        AuthorsBooks::deleteAll(['book_id'=>$this->book_id]);
+        AuthorBook::deleteAll(['book_id'=>$this->id]);
     }
 
+    public function getAuthors()
+    {
+        return $this->hasMany(Author::class, ['id' => 'author_id'])->via('authorBook');
+    }
 
 }

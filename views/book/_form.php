@@ -1,24 +1,22 @@
 <?php
 
-
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\Authors;
-
+use app\models\Author;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Books */
-/* @var $author app\models\Authors */
+/* @var $model app\models\Book */
+/* @var $author app\models\Author */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="books-form">
+<div class="book-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php $authors = ArrayHelper::map(Authors::find()->all(), 'author_id', 'name'); ?>
+    <?php $authors = ArrayHelper::map(Author::find()->all(), 'id', 'name'); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
